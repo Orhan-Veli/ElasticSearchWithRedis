@@ -43,6 +43,20 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Elasticsearch.Net": {
+              "target": "Package",
+              "version": "[7.13.1, )"
+            },
+            "NEST": {
+              "target": "Package",
+              "version": "[7.13.1, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.2.62, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
