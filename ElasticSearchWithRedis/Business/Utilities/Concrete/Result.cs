@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElasticSearchWithRedis.Business.Utilities.Concrete
 {
-    public class Result<T> : IResult<T> where T : class,new()
+    public class Result<T> : IResult<T> 
     {
 
         public Result(string message, bool success, T data)

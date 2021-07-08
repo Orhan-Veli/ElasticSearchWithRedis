@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ElasticSearchWithRedis.Business.Utilities.Abstract
 {
-    public interface IResult<T> where T:class
+    public interface IResult<T> 
     {
         public T Data { get; set; }
 

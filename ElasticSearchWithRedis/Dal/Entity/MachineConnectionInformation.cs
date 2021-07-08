@@ -15,6 +15,10 @@ namespace ElasticSearchWithRedis.Dal.Entity
         public int Duration { get; set; }
 
         public SensorType SensorType { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 
     public enum SensorType
