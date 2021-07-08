@@ -12,6 +12,7 @@ namespace ElasticSearchWithRedis.Business.Abstract
         Task<IResult<bool>> Create(string indexName,MachineConnectionInformation model);
 
         Task<IResult<MachineConnectionInformation>> Update(MachineConnectionInformation model);
+        Task<IResult<MachineConnectionInformation>> Get(string indexName,Guid id);
         Task<IResult<bool>> Delete(string indexName,Guid id);
   
     }

@@ -34,5 +34,13 @@ namespace ElasticSearchWithRedis.Controllers
             if (!result.Success) return BadRequest();
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(string indexName, Guid id)
+        {
+            var result = await _elasticService.Get(indexName, id);
+            if (!result.Success || result.Data == null) return BadRequest();
+            return Ok(result.Data);
+        }
     }
 }

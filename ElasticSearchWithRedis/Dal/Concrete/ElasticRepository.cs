@@ -33,9 +33,10 @@ namespace ElasticSearchWithRedis.Dal.Concrete
             return response.IsValid;
         }
 
-        public Task<MachineConnectionInformation> Get(string indexName, Guid id)
+        public async Task<MachineConnectionInformation> Get(string indexName, Guid id)
         {
-            throw new NotImplementedException();
+            var response = await _client.CreateInstance().GetAsync<MachineConnectionInformation>(id, q => q.Index(indexName));
+            return response.Source;
         }
 
         public Task<List<MachineConnectionInformation>> GetAll(string indexName)

@@ -47,6 +47,14 @@ namespace ElasticSearchWithRedis.Business.Concrete
 
         }
 
+        public async Task<IResult<MachineConnectionInformation>> Get(string indexName, Guid id)
+        {
+            if(string.IsNullOrEmpty(indexName) && id == Guid.Empty) return new Result<MachineConnectionInformation>(false);
+            var response = await _elasticRepository.Get(indexName,id);
+            if(response == null) return new Result<MachineConnectionInformation>(false);
+            return new Result<MachineConnectionInformation>(true,response);
+        }
+
         public Task<IResult<MachineConnectionInformation>> Update(MachineConnectionInformation model)
         {
             throw new NotImplementedException();
