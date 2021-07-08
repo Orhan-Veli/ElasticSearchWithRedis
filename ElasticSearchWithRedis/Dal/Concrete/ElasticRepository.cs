@@ -39,9 +39,10 @@ namespace ElasticSearchWithRedis.Dal.Concrete
             return response.Source;
         }
 
-        public Task<List<MachineConnectionInformation>> GetAll(string indexName)
+        public async Task<List<MachineConnectionInformation>> GetAll(string indexName)
         {
-            throw new NotImplementedException();
+            var response = await _client.CreateInstance().SearchAsync<MachineConnectionInformation>(q => q.Index(indexName).Scroll("5m"));
+            return response.Documents.ToList();
         }
 
         public Task<MachineConnectionInformation> Update(string indexName, MachineConnectionInformation model)
