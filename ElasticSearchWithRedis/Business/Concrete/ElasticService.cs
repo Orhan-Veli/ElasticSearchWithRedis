@@ -64,9 +64,22 @@ namespace ElasticSearchWithRedis.Business.Concrete
 
         }
 
-        public Task<IResult<MachineConnectionInformation>> Update(MachineConnectionInformation model)
+        public async Task<IResult<MachineConnectionInformation>> Update(string indexName,MachineConnectionInformation model)
         {
-            throw new NotImplementedException();
+            if (
+               model.AssetId == Guid.Empty ||
+               model.Duration == 0 ||
+               model.EndDate == null ||
+               model.StartDate == null ||
+               model.SensorId == Guid.Empty || 
+               string.IsNullOrEmpty(indexName)
+               )
+            {
+                return new Result<MachineConnectionInformation>(false);
+            }
+            var response = await _elasticRepository.Update(indexName,model);
+            if(response == null) return new Result<MachineConnectionInformation>(false);
+            return new Result<MachineConnectionInformation>(true, response);
         }
     }
 }

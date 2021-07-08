@@ -50,5 +50,12 @@ namespace ElasticSearchWithRedis.Controllers
             if(!response.Success && response.Data == null) return BadRequest();
             return Ok(response.Data);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] MachineConnectionInformation machineConnectionInformation, string indexName)
+        {
+            var response = await _elasticService.Update(indexName, machineConnectionInformation);
+            if (!response.Success && response.Data == null) return BadRequest();
+            return Ok(response.Data);
+        }
     }
 }

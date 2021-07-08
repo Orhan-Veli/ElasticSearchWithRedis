@@ -45,9 +45,10 @@ namespace ElasticSearchWithRedis.Dal.Concrete
             return response.Documents.ToList();
         }
 
-        public Task<MachineConnectionInformation> Update(string indexName, MachineConnectionInformation model)
+        public async Task<MachineConnectionInformation> Update(string indexName, MachineConnectionInformation model)
         {
-            throw new NotImplementedException();
+            var response = await _client.CreateInstance().UpdateAsync<MachineConnectionInformation>(model.SensorId,a=>a.Index(indexName).Doc(model));
+            return model;
         }
     }
 }
