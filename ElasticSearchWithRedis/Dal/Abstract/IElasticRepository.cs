@@ -7,14 +7,14 @@ namespace ElasticSearchWithRedis.Dal.Abstract
 {
     public interface IElasticRepository<T> 
     {
-        Task<bool> Create(string indexName,T model);
+        Task<bool> Create(T model);
 
-        Task<T> Update(string indexName, T model);
+        Task<T> Update(T model);
 
-        Task<bool> Delete(string indexName, Guid id);
+        Task<bool> Delete(Guid id);
 
-        Task<T> Get(string indexName,Guid id);
+        Task<T> Get(Guid id);
 
-        Task<List<T>> GetAll(string indexName);
+        Task<List<T>> GetAll();
     }
 }

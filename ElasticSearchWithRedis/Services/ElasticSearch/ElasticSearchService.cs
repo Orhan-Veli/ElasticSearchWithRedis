@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ElasticSearchWithRedis.Extentions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Nest;
 using System;
 using System.Threading.Tasks;
 
-namespace ElasticSearchWithRedis.Extensions
+namespace ElasticSearchWithRedis.Services
 {
     public class ElasticSearchService : IElasticSearchService
     {
@@ -20,7 +21,7 @@ namespace ElasticSearchWithRedis.Extensions
         {
             string host = _configuration["elasticsearchserver:Host"];
             string userName = _configuration["elasticsearchserver:Username"];
-            string password = _configuration["elasticsearchserver:Password"];
+            string password = _configuration["elasticsearchserver:Password"];           
             var settings = new ConnectionSettings(new Uri(host));
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
                 settings.BasicAuthentication(userName, password);

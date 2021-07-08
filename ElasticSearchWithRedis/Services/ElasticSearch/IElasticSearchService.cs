@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ElasticSearchWithRedis.Extensions
+namespace ElasticSearchWithRedis.Services
 {
     public interface IElasticSearchService
     {

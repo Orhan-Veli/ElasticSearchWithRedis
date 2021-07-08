@@ -20,7 +20,7 @@ namespace ElasticSearchWithRedis.Business.Concrete
         {
             _elasticRepository = elasticRepository;
         }
-        public async Task<IResult<bool>> Create(string indexName,MachineConnectionInformation model)
+        public async Task<IResult<bool>> Create(MachineConnectionInformation model)
         {
             if (
                 model.AssetId == Guid.Empty ||
@@ -32,52 +32,50 @@ namespace ElasticSearchWithRedis.Business.Concrete
             {
                 return new Result<bool>(Messages.ModelNotValid, false);
             }
-            var result = await _elasticRepository.Create(indexName,model);
+            var result = await _elasticRepository.Create(model);
             if(result) return new Result<bool>(true);
             return new Result<bool>(Messages.CreateResponseFailed, false);
 
         }
 
-        public async Task<IResult<bool>> Delete(string indexName, Guid id)
+        public async Task<IResult<bool>> Delete(Guid id)
         {
-            if (string.IsNullOrEmpty(indexName) && id == Guid.Empty) return new Result<bool>(false);
-            var result = await _elasticRepository.Delete(indexName, id);
+            if (id == Guid.Empty) return new Result<bool>(false);
+            var result = await _elasticRepository.Delete(id);
             if (result) return new Result<bool>(true);
             return new Result<bool>(Messages.CreateResponseFailed, false);
 
         }
 
-        public async Task<IResult<MachineConnectionInformation>> Get(string indexName, Guid id)
+        public async Task<IResult<MachineConnectionInformation>> Get(Guid id)
         {
-            if(string.IsNullOrEmpty(indexName) && id == Guid.Empty) return new Result<MachineConnectionInformation>(false);
-            var response = await _elasticRepository.Get(indexName,id);
+            if(id == Guid.Empty) return new Result<MachineConnectionInformation>(false);
+            var response = await _elasticRepository.Get(id);
             if(response == null) return new Result<MachineConnectionInformation>(false);
             return new Result<MachineConnectionInformation>(true,response);
         }
 
-        public async Task<IResult<List<MachineConnectionInformation>>> GetAll(string indexName)
+        public async Task<IResult<List<MachineConnectionInformation>>> GetAll()
         {
-            if(string.IsNullOrEmpty(indexName)) return new Result<List<MachineConnectionInformation>>(false);
-            var response = await _elasticRepository.GetAll(indexName);
+            var response = await _elasticRepository.GetAll();
             if(response.Count == 0) return new Result<List<MachineConnectionInformation>>(false);
             return new Result<List<MachineConnectionInformation>>(true,response);
 
         }
 
-        public async Task<IResult<MachineConnectionInformation>> Update(string indexName,MachineConnectionInformation model)
+        public async Task<IResult<MachineConnectionInformation>> Update(MachineConnectionInformation model)
         {
             if (
                model.AssetId == Guid.Empty ||
                model.Duration == 0 ||
                model.EndDate == null ||
                model.StartDate == null ||
-               model.SensorId == Guid.Empty || 
-               string.IsNullOrEmpty(indexName)
+               model.SensorId == Guid.Empty
                )
             {
                 return new Result<MachineConnectionInformation>(false);
             }
-            var response = await _elasticRepository.Update(indexName,model);
+            var response = await _elasticRepository.Update(model);
             if(response == null) return new Result<MachineConnectionInformation>(false);
             return new Result<MachineConnectionInformation>(true, response);
         }

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ElasticSearchWithRedis.Extensions
+namespace ElasticSearchWithRedis.Extentions
 {
-    public static class Mapping
+    public static class CreateIndexDescriptorExtensions
     {
         public static CreateIndexDescriptor MachineMapping(this CreateIndexDescriptor descriptor)
         {

@@ -20,40 +20,40 @@ namespace ElasticSearchWithRedis.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]MachineConnectionInformation machineConnectionInformation, string indexName)
+        public async Task<IActionResult> Create([FromBody]MachineConnectionInformation machineConnectionInformation)
         {
-            var result = await _elasticService.Create(indexName,machineConnectionInformation);
+            var result = await _elasticService.Create(machineConnectionInformation);
             if (!result.Success) return BadRequest();
             return Ok();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(string indexName, Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _elasticService.Delete(indexName, id);
+            var result = await _elasticService.Delete(id);
             if (!result.Success) return BadRequest();
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string indexName, Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _elasticService.Get(indexName, id);
+            var result = await _elasticService.Get(id);
             if (!result.Success || result.Data == null) return BadRequest();
             return Ok(result.Data);
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll(string indexName)
+        public async Task<IActionResult> GetAll()
         {
-            var response = await _elasticService.GetAll(indexName);
+            var response = await _elasticService.GetAll();
             if(!response.Success && response.Data == null) return BadRequest();
             return Ok(response.Data);
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] MachineConnectionInformation machineConnectionInformation, string indexName)
+        public async Task<IActionResult> Update([FromBody]MachineConnectionInformation machineConnectionInformation)
         {
-            var response = await _elasticService.Update(indexName, machineConnectionInformation);
+            var response = await _elasticService.Update(machineConnectionInformation);
             if (!response.Success && response.Data == null) return BadRequest();
             return Ok(response.Data);
         }
