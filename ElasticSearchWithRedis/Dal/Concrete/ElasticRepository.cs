@@ -22,16 +22,15 @@ namespace ElasticSearchWithRedis.Dal.Concrete
             _client = new ElasticSearchService(configuration);           
         }
         public async Task<bool> Create(string indexName, MachineConnectionInformation model)
-        {
-           
+        {           
            var response = await _client.CreateInstance().CreateAsync(model, q => q.Index(indexName).Id(model.SensorId));
-            return response.IsValid;
-        
+            return response.IsValid;        
         }
 
-        public Task Delete(string indexName, Guid id)
+        public async Task<bool> Delete(string indexName, Guid id)
         {
-            throw new NotImplementedException();
+            var response = await _client.CreateInstance().DeleteAsync<MachineConnectionInformation>(id, x=>x.Index(indexName));
+            return response.IsValid;
         }
 
         public Task<MachineConnectionInformation> Get(string indexName, Guid id)

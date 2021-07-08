@@ -38,6 +38,15 @@ namespace ElasticSearchWithRedis.Business.Concrete
 
         }
 
+        public async Task<IResult<bool>> Delete(string indexName, Guid id)
+        {
+            if (string.IsNullOrEmpty(indexName) && id == Guid.Empty) return new Result<bool>(false);
+            var result = await _elasticRepository.Delete(indexName, id);
+            if (result) return new Result<bool>(true);
+            return new Result<bool>(Messages.CreateResponseFailed, false);
+
+        }
+
         public Task<IResult<MachineConnectionInformation>> Update(MachineConnectionInformation model)
         {
             throw new NotImplementedException();

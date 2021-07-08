@@ -11,7 +11,7 @@ namespace ElasticSearchWithRedis.Dal.Abstract
 
         Task<T> Update(string indexName, T model);
 
-        Task Delete(string indexName, Guid id);
+        Task<bool> Delete(string indexName, Guid id);
 
         Task<T> Get(string indexName,Guid id);
 

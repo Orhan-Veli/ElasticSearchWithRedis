@@ -26,5 +26,13 @@ namespace ElasticSearchWithRedis.Controllers
             if (!result.Success) return BadRequest();
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string indexName, Guid id)
+        {
+            var result = await _elasticService.Delete(indexName, id);
+            if (!result.Success) return BadRequest();
+            return Ok();
+        }
     }
 }
