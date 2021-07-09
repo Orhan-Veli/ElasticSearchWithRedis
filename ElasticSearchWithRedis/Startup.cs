@@ -29,7 +29,9 @@ namespace ElasticSearchWithRedis
             services.AddControllers();            
             services.AddScoped<IElasticSearchService,ElasticSearchService>();           
             services.AddSingleton<IElasticRepository<MachineConnectionInformation>, ElasticRepository>();
-            services.AddSingleton<IElasticService, ElasticService>();           
+            services.AddSingleton<IElasticService, ElasticService>();        
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

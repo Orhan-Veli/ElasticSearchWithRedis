@@ -20,7 +20,7 @@ namespace ElasticSearchWithRedis.Dal.Concrete
         private readonly string _indexName;
         public ElasticRepository(IConfiguration configuration)
         {
-            _indexName = configuration.GetSection("elasticsearch:indexName").ToString();
+            _indexName = configuration["elasticsearchserver:indexName"].ToString();
             _client = new ElasticSearchService(configuration);           
         }
         public async Task<bool> Create(MachineConnectionInformation model)
