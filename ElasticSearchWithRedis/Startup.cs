@@ -6,10 +6,12 @@ using ElasticSearchWithRedis.Dal.Entity;
 using ElasticSearchWithRedis.Extentions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nest;
+using StackExchange.Redis;
 using System;
 
 namespace ElasticSearchWithRedis
@@ -19,11 +21,9 @@ namespace ElasticSearchWithRedis
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
-
         }
 
         public IConfiguration _configuration { get; }
-        public IElasticClient _client { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,6 +32,10 @@ namespace ElasticSearchWithRedis
             services.AddSingleton(_configuration);
             services.AddControllers();
             services.AddSingleton<IElasticRepository<MachineConnectionInformation>, ElasticRepository>();
+            services.AddSingleton<IRedisRepository, RedisRepository>();
+            services.AddSingleton<IRedisService, RedisService>();
+            services.AddSingleton<IElasticRepository<MachineConnectionInformation>, ElasticRepository>();
+            services.AddSingleton<IElasticService, ElasticService>();
             services.AddSingleton<IElasticClient>(
             p =>
             {
@@ -44,7 +48,16 @@ namespace ElasticSearchWithRedis
                 }
                 return elas;
             });
-            services.AddSingleton<IElasticService, ElasticService>();
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = _configuration["rediscache:Url"];
+            });
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = _configuration["rediscache:Host"];
+                options.InstanceName = _configuration["rediscache:instancename"];
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
